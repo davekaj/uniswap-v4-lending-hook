@@ -20,5 +20,13 @@ Alright
   - Obviosly DAI is special case, where sDAI is awesome
 - For ETH, rotate through
   - wstETH, rETH, cbETH, and others? 
+- Other things
+  - Parameters
+    - Max amount of idle capital that can go to a lending protocol
+    - tbg others
 
-That is all it has to do!
+That is all it has to do! But the DEVIL IS IN THE DETAILS
+- Like any strategy in investing, it has to be flexible and move around efficiently, otherwise it can just grind away and do too much, and cost fees
+- Or be super simple
+  - I want it to be super simple
+  - However to get to that point will take a lot of iterations, and hard work, but lets get there.
