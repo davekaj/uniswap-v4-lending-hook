@@ -30,3 +30,11 @@ That is all it has to do! But the DEVIL IS IN THE DETAILS
 - Or be super simple
   - I want it to be super simple
   - However to get to that point will take a lot of iterations, and hard work, but lets get there.
+
+Big Questions
+- How will we be able to send the users rewards? It means tracking each users share. Or else, we just sell the returns, and donate(), and that increases everyones LP shares automatically?
+
+Extremely good explanation on what this hook does
+- Each tick can be viewed as it's own pool
+- so all those pools are completely idle capital when you are outside of them
+- thus, they are useless. might as well earn yield
