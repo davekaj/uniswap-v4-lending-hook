@@ -1,12 +1,45 @@
 # V4 Lending Hook
-## Setup
+# Setup
 ```
 bun i
 forge install
 forge test
 ```
 
-## Resources
+# TODOS
+- [ ] Write the basic hooks, with 1 test
+- [ ] Clean up repo to remove any excess files from the template (i.e. make it look like no template ever existed)
+- [ ] Connect with the very basics to Aave, i.e. just deposit in aave on afterDeposit hook
+- [ ] Once aave is MPV connected, make everything in Uniswap v4 work properly
+  - [ ] Bring in V3 curve with ticks
+  - [ ] Update to latest uniswap v4 code base
+  - [ ] Implement the 2-3 hooks I need
+  - [ ] Testing
+  - .... probably more
+- [ ] Once Uniswap is working as intended, integrate with aave 100%
+  - .... depositing, withdrawing, paying rewards, tests, many tasks here
+- Future
+  - How to add in more assets, not just, USDC, USDT, and WETH ()
+
+# Design
+Basically, deposit idle assets into Aave V3. More details:
+- Its native ETH because uniswap v4 does not use WETH
+- Just take ETH and put it into wstETH or rETH
+- It's built for USDC and USDT as they have heavy aave depth and uniswap depth
+- We deposit idle assets into aave (i.e. assets outside of the active curve)
+- We are using uniswap v3 curve and ticks
+
+Ideas we decided to avoid
+- sDAI, because it just for DAI, and we want to use Aave. So no use of Spark for now.
+- Working with aUSDC or wstETH or anything, because then you wouldn't need the hook at all if the pool is based in those assets
+- We do not nest borrowing in aave, too complex, too much risk, and it's just leverage anyways, and it costs money to take leverage
+- no cbETH because it is blacklistable
+
+# Open Questions
+- How to hand out the rewards to users? (maybe sell rewards then donate token/eth to pool, increase everyones LP shares value)
+- How to add in more yield protocols (i.e. compound, spark) and rebalance for the best yield?
+
+# Resources
 - Refer to https://github.com/uniswapfoundation/v4-template for the original template docs
 
 ## Updating to v4-template:latest
