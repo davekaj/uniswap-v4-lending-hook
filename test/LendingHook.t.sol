@@ -12,7 +12,7 @@ import { Hooks } from "@uniswap/v4-core/contracts/libraries/Hooks.sol";
 import { TickMath } from "@uniswap/v4-core/contracts/libraries/TickMath.sol";
 import { PoolKey } from "@uniswap/v4-core/contracts/types/PoolKey.sol";
 import { PoolId, PoolIdLibrary } from "@uniswap/v4-core/contracts/types/PoolId.sol";
-import { BalanceDelta } from "@uniswap/v4-core/contracts/types/BalanceDelta.sol";
+// import { BalanceDelta } from "@uniswap/v4-core/contracts/types/BalanceDelta.sol";
 import { CurrencyLibrary, Currency } from "v4-core/types/Currency.sol";
 
 // Constants

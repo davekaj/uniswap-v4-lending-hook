@@ -3,7 +3,6 @@ pragma solidity ^0.8.20;
 
 import "forge-std/Script.sol";
 import { IPoolManager } from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
-import { PoolManager } from "@uniswap/v4-core/contracts/PoolManager.sol";
 import { IHooks } from "@uniswap/v4-core/contracts/interfaces/IHooks.sol";
 import { PoolKey } from "@uniswap/v4-core/contracts/types/PoolKey.sol";
 import { CurrencyLibrary, Currency } from "@uniswap/v4-core/contracts/types/Currency.sol";

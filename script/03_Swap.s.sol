@@ -8,7 +8,7 @@ import { IPoolManager } from "@uniswap/v4-core/contracts/interfaces/IPoolManager
 import { PoolKey } from "@uniswap/v4-core/contracts/types/PoolKey.sol";
 import { PoolSwapTest } from "@uniswap/v4-core/contracts/test/PoolSwapTest.sol";
 import { TickMath } from "@uniswap/v4-core/contracts/libraries/TickMath.sol";
-import { CurrencyLibrary, Currency } from "@uniswap/v4-core/contracts/types/Currency.sol";
+import { Currency } from "@uniswap/v4-core/contracts/types/Currency.sol";
 import { IHooks } from "@uniswap/v4-core/contracts/interfaces/IHooks.sol";
 
 contract SwapScript is Script {

@@ -18,6 +18,12 @@ forge test
   - .... probably more
 - [ ] Once Uniswap is working as intended, integrate with aave 100%
   - .... depositing, withdrawing, paying rewards, tests, many tasks here
+- Misc
+  - [ ] solhint bun script breaks, exits early
+  - [ ] github actions
+  - [x] cleanup solhint warnings
+    - [ ] turn back on state-visibility, global imports, empty-blocks, 
+  - [ ] probably - Switch entire repo to node modules and not foundry submodules. The remappings always give me errors, and block out real errors in vsCode. Also, if submodules are being annoying, [see this](https://twitter.com/PaulRBerg/status/1736695487057531328)
 - Future
   - How to add in more assets, not just, USDC, USDT, and WETH ()
 
@@ -41,6 +47,7 @@ Ideas we decided to avoid
 
 # Resources
 - Refer to https://github.com/uniswapfoundation/v4-template for the original template docs
+- Repo is also inspired by https://github.com/PaulRBerg/foundry-template
 
 ## Updating to v4-template:latest
 

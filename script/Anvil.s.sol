@@ -14,7 +14,7 @@ import { PoolKey } from "@uniswap/v4-core/contracts/types/PoolKey.sol";
 import { MockERC20 } from "solmate/test/utils/mocks/MockERC20.sol";
 import { Constants } from "@uniswap/v4-core/contracts/../test/utils/Constants.sol";
 import { TickMath } from "@uniswap/v4-core/contracts/libraries/TickMath.sol";
-import { CurrencyLibrary, Currency } from "@uniswap/v4-core/contracts/types/Currency.sol";
+import { Currency } from "@uniswap/v4-core/contracts/types/Currency.sol";
 import { Counter } from "../src/Counter.sol";
 import { HookMiner } from "../test/utils/HookMiner.sol";
 

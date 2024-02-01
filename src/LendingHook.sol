@@ -9,13 +9,13 @@ import { PoolId, PoolIdLibrary } from "@uniswap/v4-core/contracts/types/PoolId.s
 import { PoolKey } from "@uniswap/v4-core/contracts/types/PoolKey.sol";
 import { CurrencyLibrary, Currency } from "@uniswap/v4-core/contracts/types/Currency.sol";
 import { BalanceDelta } from "@uniswap/v4-core/contracts/types/BalanceDelta.sol";
-import { TickMath } from "@uniswap/v4-core/contracts/libraries/TickMath.sol";
+// import { TickMath } from "@uniswap/v4-core/contracts/libraries/TickMath.sol";
 import { Pool } from "@uniswap/v4-core/contracts/libraries/Pool.sol";
-import { Position } from "@uniswap/v4-core/contracts/libraries/Position.sol";
+// import { Position } from "@uniswap/v4-core/contracts/libraries/Position.sol";
 import { IPoolManager } from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
 
 // Oz
-import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+// import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract LendingHook is BaseHook {
@@ -23,19 +23,19 @@ contract LendingHook is BaseHook {
     using PoolIdLibrary for PoolKey;
     using CurrencyLibrary for Currency;
 
-    // NOTE - Starting with hardcoding USDC and DAI, in order to keep it simple for now
-    // TODO - not really true, sDAI has different interface for mint and burn events
-    IERC20 public immutable sDAI = IERC20(0x83F20F44975D03b1b09e64809B757c47f942BEeA);
-    IERC20 public immutable DAI = IERC20(0x6B175474E89094C44Da98b954EedeAC495271d0F);
+    // NOTE - Starting with hardcoding USDC in order to keep it simple for now
+    // IERC20 public immutable sDAI = IERC20(0x83F20F44975D03b1b09e64809B757c47f942BEeA);
+    // IERC20 public immutable DAI = IERC20(0x6B175474E89094C44Da98b954EedeAC495271d0F);
     IERC20 public immutable USDC = IERC20(0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48);
 
-    // TODO - add rETH, cbETH (but TODO - look at legal aspects of cbETH). Leave out frxETH - too risky
-    IERC20 public immutable wstETH = IERC20(0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0);
-
+    // TODO - add rETH
     // NOTE - You can't directly read stETH yield. It's unknown the future of it.
     // Best you can do is 7 day average or something
     // Will be important when incorporating other liquid eth tokens (I guess we don't know the real yield of any of
     // them)
+    IERC20 public immutable wstETH = IERC20(0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0);
+
+
 
     constructor(IPoolManager _poolManager) BaseHook(_poolManager) { }
 
