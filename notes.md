@@ -38,3 +38,25 @@ Extremely good explanation on what this hook does
 - Each tick can be viewed as it's own pool
 - so all those pools are completely idle capital when you are outside of them
 - thus, they are useless. might as well earn yield
+
+# Summary 1
+So it's
+- WETH or ETH and DAI
+- it is WETH/DAI
+- Question - Do you still need a WETH/sDAI pool, or a wstETH/DAI pool, or a wstETH/sDAI pool
+  - Ideally you aggregate it all.
+  - note - ETH is not wsETH and DAI is not sDAI, they do bring risks (wstETH more so)
+  - depositing them
+  - duh - if you use wstETH and sDAI from the start, you don't even need this module at all, so you must do with raw WETH
+- NOTE - DAI has quite low volume on DEXes, 25m daily to usdts 240MM and usdcs 265MM
+- HEY - ridiculously obvious thing I realized
+  - You can't use uniswap v3 pools here.... cuz this is uniswap v4, lol
+  - so you need to natively import the raw v3 code for basic pool config, somewhere
+  - ahh okay but the HOOKS are depositing weth, usdc and tether into AAVE and compound and spark and sDAI
+  - okay but no SDAI, just do AAVE right now
+
+# Summary of summary 
+- Its native ETH because uniswap v4 does not use WETH
+- It's built for USDC and USDT as they have heavy aave depth
+- We deposit idle assets into aave (i.e. assets outside of the active curve)
+- We are using uniswap v3 curve and ticks
