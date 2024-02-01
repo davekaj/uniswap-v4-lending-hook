@@ -27,7 +27,7 @@ contract LendingHookTest is HookTest {
     using PoolIdLibrary for PoolKey;
     using CurrencyLibrary for Currency;
 
-    LendingHook LendingHook;
+    LendingHook lendingHook;
     PoolKey poolKey;
     PoolId poolId;
 
@@ -39,7 +39,7 @@ contract LendingHookTest is HookTest {
 
         // Deploy the hook to an address with the correct flags
         uint160 flags =
-            uint160(Hooks.AFTER_SWAP_FLAG | Hooks.BEFORE_MODIFY_SWAP_FLAG | Hooks.AFTER_MODIFY_POSITION_FLAG);
+            uint160(Hooks.AFTER_SWAP_FLAG | Hooks.BEFORE_MODIFY_POSITION_FLAG | Hooks.AFTER_MODIFY_POSITION_FLAG);
         (address hookAddress, bytes32 salt) =
             HookMiner.find(address(this), flags, type(LendingHook).creationCode, abi.encode(address(manager)));
         lendingHook = new LendingHook{salt: salt}(IPoolManager(address(manager)));

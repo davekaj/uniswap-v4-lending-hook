@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-pragma solidity ^0.8.22;
+pragma solidity >=0.8.0 <0.9.0;
 
 // Uniswap
 // TODO: update to v4-periphery/BaseHook.sol when its compatible
@@ -23,7 +23,7 @@ contract LendingHook is BaseHook {
     using PoolIdLibrary for PoolKey;
     using CurrencyLibrary for Currency;
 
-    // NOTE - Starting with hardcoding USDC and DAI, in order to keep it simple fro now
+    // NOTE - Starting with hardcoding USDC and DAI, in order to keep it simple for now
     // TODO - not really true, sDAI has different interface for mint and burn events
     IERC20 public immutable sDAI = IERC20(0x83F20F44975D03b1b09e64809B757c47f942BEeA);
     IERC20 public immutable DAI = IERC20(0x6B175474E89094C44Da98b954EedeAC495271d0F);
@@ -34,13 +34,13 @@ contract LendingHook is BaseHook {
 
     // NOTE - You can't directly read stETH yield. It's unknown the future of it. 
     // Best you can do is 7 day average or something
-    // Will be important when incorporating other liquid eth tokens
+    // Will be important when incorporating other liquid eth tokens (I guess we don't know the real yield of any of them)
 
 
     constructor(IPoolManager _poolManager) BaseHook(_poolManager) {}
 
-    function getHooksCalls() public pure override returns (Hooks.Calls memory) {
-        return Hooks.Calls({
+    function getHookPermissions() public override pure returns (Hooks.Permissions memory) {
+        return Hooks.Permissions({
             beforeInitialize: false,
             afterInitialize: false,
             beforeModifyPosition: true,
@@ -48,7 +48,9 @@ contract LendingHook is BaseHook {
             beforeSwap: false, // TODO - is it needed?
             afterSwap: true,
             beforeDonate: false,
-            afterDonate: false // TODO - Should be able to incorporate donating
+            afterDonate: false, // TODO - Should be able to incorporate donating
+            noOp: false,
+            accessLock: false
         });
     }
     // ---------------------------------- Hooks ----------------------------------
