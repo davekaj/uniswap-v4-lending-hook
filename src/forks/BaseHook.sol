@@ -7,11 +7,11 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.19;
 
-import {Hooks} from "@uniswap/v4-core/contracts/libraries/Hooks.sol";
-import {IPoolManager} from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
-import {IHooks} from "@uniswap/v4-core/contracts/interfaces/IHooks.sol";
-import {BalanceDelta} from "@uniswap/v4-core/contracts/types/BalanceDelta.sol";
-import {PoolKey} from "@uniswap/v4-core/contracts/types/PoolKey.sol";
+import { Hooks } from "@uniswap/v4-core/contracts/libraries/Hooks.sol";
+import { IPoolManager } from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
+import { IHooks } from "@uniswap/v4-core/contracts/interfaces/IHooks.sol";
+import { BalanceDelta } from "@uniswap/v4-core/contracts/types/BalanceDelta.sol";
+import { PoolKey } from "@uniswap/v4-core/contracts/types/PoolKey.sol";
 
 abstract contract BaseHook is IHooks {
     error NotPoolManager();
@@ -70,7 +70,13 @@ abstract contract BaseHook is IHooks {
         revert HookNotImplemented();
     }
 
-    function afterInitialize(address, PoolKey calldata, uint160, int24, bytes calldata)
+    function afterInitialize(
+        address,
+        PoolKey calldata,
+        uint160,
+        int24,
+        bytes calldata
+    )
         external
         virtual
         returns (bytes4)
@@ -78,7 +84,12 @@ abstract contract BaseHook is IHooks {
         revert HookNotImplemented();
     }
 
-    function beforeModifyPosition(address, PoolKey calldata, IPoolManager.ModifyPositionParams calldata, bytes calldata)
+    function beforeModifyPosition(
+        address,
+        PoolKey calldata,
+        IPoolManager.ModifyPositionParams calldata,
+        bytes calldata
+    )
         external
         virtual
         returns (bytes4)
@@ -92,11 +103,7 @@ abstract contract BaseHook is IHooks {
         IPoolManager.ModifyPositionParams calldata,
         BalanceDelta,
         bytes calldata
-    ) external virtual returns (bytes4) {
-        revert HookNotImplemented();
-    }
-
-    function beforeSwap(address, PoolKey calldata, IPoolManager.SwapParams calldata, bytes calldata)
+    )
         external
         virtual
         returns (bytes4)
@@ -104,7 +111,12 @@ abstract contract BaseHook is IHooks {
         revert HookNotImplemented();
     }
 
-    function afterSwap(address, PoolKey calldata, IPoolManager.SwapParams calldata, BalanceDelta, bytes calldata)
+    function beforeSwap(
+        address,
+        PoolKey calldata,
+        IPoolManager.SwapParams calldata,
+        bytes calldata
+    )
         external
         virtual
         returns (bytes4)
@@ -112,7 +124,13 @@ abstract contract BaseHook is IHooks {
         revert HookNotImplemented();
     }
 
-    function beforeDonate(address, PoolKey calldata, uint256, uint256, bytes calldata)
+    function afterSwap(
+        address,
+        PoolKey calldata,
+        IPoolManager.SwapParams calldata,
+        BalanceDelta,
+        bytes calldata
+    )
         external
         virtual
         returns (bytes4)
@@ -120,7 +138,27 @@ abstract contract BaseHook is IHooks {
         revert HookNotImplemented();
     }
 
-    function afterDonate(address, PoolKey calldata, uint256, uint256, bytes calldata)
+    function beforeDonate(
+        address,
+        PoolKey calldata,
+        uint256,
+        uint256,
+        bytes calldata
+    )
+        external
+        virtual
+        returns (bytes4)
+    {
+        revert HookNotImplemented();
+    }
+
+    function afterDonate(
+        address,
+        PoolKey calldata,
+        uint256,
+        uint256,
+        bytes calldata
+    )
         external
         virtual
         returns (bytes4)

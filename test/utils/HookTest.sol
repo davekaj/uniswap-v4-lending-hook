@@ -3,17 +3,17 @@ pragma solidity ^0.8.19;
 
 import "forge-std/Test.sol";
 
-import {PoolManager} from "@uniswap/v4-core/contracts/PoolManager.sol";
-import {IPoolManager} from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
-import {PoolKey} from "@uniswap/v4-core/contracts/types/PoolKey.sol";
-import {BalanceDelta} from "@uniswap/v4-core/contracts/types/BalanceDelta.sol";
-import {PoolInitializeTest} from "@uniswap/v4-core/contracts/test/PoolInitializeTest.sol";
-import {PoolModifyPositionTest} from "@uniswap/v4-core/contracts/test/PoolModifyPositionTest.sol";
-import {PoolSwapTest} from "@uniswap/v4-core/contracts/test/PoolSwapTest.sol";
-import {PoolDonateTest} from "@uniswap/v4-core/contracts/test/PoolDonateTest.sol";
+import { PoolManager } from "@uniswap/v4-core/contracts/PoolManager.sol";
+import { IPoolManager } from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
+import { PoolKey } from "@uniswap/v4-core/contracts/types/PoolKey.sol";
+import { BalanceDelta } from "@uniswap/v4-core/contracts/types/BalanceDelta.sol";
+import { PoolInitializeTest } from "@uniswap/v4-core/contracts/test/PoolInitializeTest.sol";
+import { PoolModifyPositionTest } from "@uniswap/v4-core/contracts/test/PoolModifyPositionTest.sol";
+import { PoolSwapTest } from "@uniswap/v4-core/contracts/test/PoolSwapTest.sol";
+import { PoolDonateTest } from "@uniswap/v4-core/contracts/test/PoolDonateTest.sol";
 
-import {TestERC20} from "@uniswap/v4-core/contracts/test/TestERC20.sol";
-import {TickMath} from "@uniswap/v4-core/contracts/libraries/TickMath.sol";
+import { TestERC20 } from "@uniswap/v4-core/contracts/test/TestERC20.sol";
+import { TickMath } from "@uniswap/v4-core/contracts/libraries/TickMath.sol";
 
 /// @notice Contract to initialize some test helpers
 /// @dev Minimal initialization. Inheriting contract should set up pools and provision liquidity
@@ -44,7 +44,7 @@ contract HookTest is Test {
             token0 = _tokenB;
             token1 = _tokenA;
         }
-        manager = new PoolManager(500000);
+        manager = new PoolManager(500_000);
 
         // Helpers for interacting with the pool
         initializeRouter = new PoolInitializeTest(IPoolManager(address(manager)));
@@ -61,7 +61,12 @@ contract HookTest is Test {
         token1.approve(address(swapRouter), amount);
     }
 
-    function swap(PoolKey memory key, int256 amountSpecified, bool zeroForOne, bytes memory hookData)
+    function swap(
+        PoolKey memory key,
+        int256 amountSpecified,
+        bool zeroForOne,
+        bytes memory hookData
+    )
         internal
         returns (BalanceDelta swapDelta)
     {
@@ -69,10 +74,10 @@ contract HookTest is Test {
             zeroForOne: zeroForOne,
             amountSpecified: amountSpecified,
             sqrtPriceLimitX96: zeroForOne ? MIN_PRICE_LIMIT : MAX_PRICE_LIMIT // unlimited impact
-        });
+         });
 
         PoolSwapTest.TestSettings memory testSettings =
-            PoolSwapTest.TestSettings({withdrawTokens: true, settleUsingTransfer: true});
+            PoolSwapTest.TestSettings({ withdrawTokens: true, settleUsingTransfer: true });
 
         swapDelta = swapRouter.swap(key, params, testSettings, hookData);
     }

@@ -2,28 +2,28 @@
 pragma solidity ^0.8.19;
 
 import "forge-std/Script.sol";
-import {IHooks} from "@uniswap/v4-core/contracts/interfaces/IHooks.sol";
-import {Hooks} from "@uniswap/v4-core/contracts/libraries/Hooks.sol";
-import {PoolManager} from "@uniswap/v4-core/contracts/PoolManager.sol";
-import {IPoolManager} from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
-import {PoolInitializeTest} from "@uniswap/v4-core/contracts/test/PoolInitializeTest.sol";
-import {PoolModifyPositionTest} from "@uniswap/v4-core/contracts/test/PoolModifyPositionTest.sol";
-import {PoolSwapTest} from "@uniswap/v4-core/contracts/test/PoolSwapTest.sol";
-import {PoolDonateTest} from "@uniswap/v4-core/contracts/test/PoolDonateTest.sol";
-import {PoolKey} from "@uniswap/v4-core/contracts/types/PoolKey.sol";
-import {MockERC20} from "solmate/test/utils/mocks/MockERC20.sol";
-import {Constants} from "@uniswap/v4-core/contracts/../test/utils/Constants.sol";
-import {TickMath} from "@uniswap/v4-core/contracts/libraries/TickMath.sol";
-import {CurrencyLibrary, Currency} from "@uniswap/v4-core/contracts/types/Currency.sol";
-import {Counter} from "../src/Counter.sol";
-import {HookMiner} from "../test/utils/HookMiner.sol";
+import { IHooks } from "@uniswap/v4-core/contracts/interfaces/IHooks.sol";
+import { Hooks } from "@uniswap/v4-core/contracts/libraries/Hooks.sol";
+import { PoolManager } from "@uniswap/v4-core/contracts/PoolManager.sol";
+import { IPoolManager } from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
+import { PoolInitializeTest } from "@uniswap/v4-core/contracts/test/PoolInitializeTest.sol";
+import { PoolModifyPositionTest } from "@uniswap/v4-core/contracts/test/PoolModifyPositionTest.sol";
+import { PoolSwapTest } from "@uniswap/v4-core/contracts/test/PoolSwapTest.sol";
+import { PoolDonateTest } from "@uniswap/v4-core/contracts/test/PoolDonateTest.sol";
+import { PoolKey } from "@uniswap/v4-core/contracts/types/PoolKey.sol";
+import { MockERC20 } from "solmate/test/utils/mocks/MockERC20.sol";
+import { Constants } from "@uniswap/v4-core/contracts/../test/utils/Constants.sol";
+import { TickMath } from "@uniswap/v4-core/contracts/libraries/TickMath.sol";
+import { CurrencyLibrary, Currency } from "@uniswap/v4-core/contracts/types/Currency.sol";
+import { Counter } from "../src/Counter.sol";
+import { HookMiner } from "../test/utils/HookMiner.sol";
 
 /// @notice Forge script for deploying v4 & hooks to **anvil**
 /// @dev This script only works on an anvil RPC because v4 exceeds bytecode limits
 contract CounterScript is Script {
     address constant CREATE2_DEPLOYER = address(0x4e59b44847b379578588920cA78FbF26c0B4956C);
 
-    function setUp() public {}
+    function setUp() public { }
 
     function run() public {
         vm.broadcast();
@@ -43,7 +43,7 @@ contract CounterScript is Script {
         // Deploy the hook using CREATE2 //
         // ----------------------------- //
         vm.broadcast();
-        Counter counter = new Counter{salt: salt}(manager);
+        Counter counter = new Counter{ salt: salt }(manager);
         require(address(counter) == hookAddress, "CounterScript: hook address mismatch");
 
         // Additional helpers for interacting with the pool
@@ -62,7 +62,7 @@ contract CounterScript is Script {
     // Helpers
     // -----------------------------------------------------------
     function deployPoolManager() internal returns (IPoolManager) {
-        return IPoolManager(address(new PoolManager(500000)));
+        return IPoolManager(address(new PoolManager(500_000)));
     }
 
     function deployRouters(IPoolManager manager)
@@ -97,7 +97,9 @@ contract CounterScript is Script {
         PoolInitializeTest initializeRouter,
         PoolModifyPositionTest lpRouter,
         PoolSwapTest swapRouter
-    ) internal {
+    )
+        internal
+    {
         (MockERC20 token0, MockERC20 token1) = deployTokens();
         token0.mint(msg.sender, 100_000 ether);
         token1.mint(msg.sender, 100_000 ether);
@@ -131,10 +133,11 @@ contract CounterScript is Script {
         IPoolManager.SwapParams memory params = IPoolManager.SwapParams({
             zeroForOne: zeroForOne,
             amountSpecified: amountSpecified,
-            sqrtPriceLimitX96: zeroForOne ? TickMath.MIN_SQRT_RATIO + 1 : TickMath.MAX_SQRT_RATIO - 1 // unlimited impact
-        });
+            sqrtPriceLimitX96: zeroForOne ? TickMath.MIN_SQRT_RATIO + 1 : TickMath.MAX_SQRT_RATIO - 1 // unlimited
+                // impact
+         });
         PoolSwapTest.TestSettings memory testSettings =
-            PoolSwapTest.TestSettings({withdrawTokens: true, settleUsingTransfer: true});
+            PoolSwapTest.TestSettings({ withdrawTokens: true, settleUsingTransfer: true });
         swapRouter.swap(poolKey, params, testSettings, ZERO_BYTES);
     }
 }

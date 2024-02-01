@@ -2,18 +2,18 @@
 pragma solidity ^0.8.19;
 
 import "forge-std/Test.sol";
-import {IHooks} from "@uniswap/v4-core/contracts/interfaces/IHooks.sol";
-import {Hooks} from "@uniswap/v4-core/contracts/libraries/Hooks.sol";
-import {TickMath} from "@uniswap/v4-core/contracts/libraries/TickMath.sol";
-import {IPoolManager} from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
-import {PoolKey} from "@uniswap/v4-core/contracts/types/PoolKey.sol";
-import {BalanceDelta} from "@uniswap/v4-core/contracts/types/BalanceDelta.sol";
-import {PoolId, PoolIdLibrary} from "@uniswap/v4-core/contracts/types/PoolId.sol";
-import {Constants} from "@uniswap/v4-core/contracts/../test/utils/Constants.sol";
-import {CurrencyLibrary, Currency} from "@uniswap/v4-core/contracts/types/Currency.sol";
-import {HookTest} from "./utils/HookTest.sol";
-import {Counter} from "../src/Counter.sol";
-import {HookMiner} from "./utils/HookMiner.sol";
+import { IHooks } from "@uniswap/v4-core/contracts/interfaces/IHooks.sol";
+import { Hooks } from "@uniswap/v4-core/contracts/libraries/Hooks.sol";
+import { TickMath } from "@uniswap/v4-core/contracts/libraries/TickMath.sol";
+import { IPoolManager } from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
+import { PoolKey } from "@uniswap/v4-core/contracts/types/PoolKey.sol";
+import { BalanceDelta } from "@uniswap/v4-core/contracts/types/BalanceDelta.sol";
+import { PoolId, PoolIdLibrary } from "@uniswap/v4-core/contracts/types/PoolId.sol";
+import { Constants } from "@uniswap/v4-core/contracts/../test/utils/Constants.sol";
+import { CurrencyLibrary, Currency } from "@uniswap/v4-core/contracts/types/Currency.sol";
+import { HookTest } from "./utils/HookTest.sol";
+import { Counter } from "../src/Counter.sol";
+import { HookMiner } from "./utils/HookMiner.sol";
 
 contract CounterTest is HookTest {
     using PoolIdLibrary for PoolKey;
@@ -34,7 +34,7 @@ contract CounterTest is HookTest {
         );
         (address hookAddress, bytes32 salt) =
             HookMiner.find(address(this), flags, type(Counter).creationCode, abi.encode(address(manager)));
-        counter = new Counter{salt: salt}(IPoolManager(address(manager)));
+        counter = new Counter{ salt: salt }(IPoolManager(address(manager)));
         require(address(counter) == hookAddress, "CounterTest: hook address mismatch");
 
         // Create the pool

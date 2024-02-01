@@ -3,21 +3,24 @@ pragma solidity ^0.8.20;
 
 import "forge-std/Script.sol";
 import "forge-std/console.sol";
-import {IERC20} from "forge-std/interfaces/IERC20.sol";
-import {IPoolManager} from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
-import {PoolKey} from "@uniswap/v4-core/contracts/types/PoolKey.sol";
-import {PoolSwapTest} from "@uniswap/v4-core/contracts/test/PoolSwapTest.sol";
-import {TickMath} from "@uniswap/v4-core/contracts/libraries/TickMath.sol";
-import {CurrencyLibrary, Currency} from "@uniswap/v4-core/contracts/types/Currency.sol";
-import {IHooks} from "@uniswap/v4-core/contracts/interfaces/IHooks.sol";
+import { IERC20 } from "forge-std/interfaces/IERC20.sol";
+import { IPoolManager } from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
+import { PoolKey } from "@uniswap/v4-core/contracts/types/PoolKey.sol";
+import { PoolSwapTest } from "@uniswap/v4-core/contracts/test/PoolSwapTest.sol";
+import { TickMath } from "@uniswap/v4-core/contracts/libraries/TickMath.sol";
+import { CurrencyLibrary, Currency } from "@uniswap/v4-core/contracts/types/Currency.sol";
+import { IHooks } from "@uniswap/v4-core/contracts/interfaces/IHooks.sol";
 
 contract SwapScript is Script {
     // PoolSwapTest Contract address on Goerli
     PoolSwapTest swapRouter = PoolSwapTest(0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c);
 
-    address constant MUNI_ADDRESS = address(0xbD97BF168FA913607b996fab823F88610DCF7737); //-- insert your own contract address here -- mUNI deployed to GOERLI
-    address constant MUSDC_ADDRESS = address(0xa468864e673a807572598AB6208E49323484c6bF); //-- insert your own contract address here -- mUSDC deployed to GOERLI
-    address constant HOOK_ADDRESS = address(0x3CA2cD9f71104a6e1b67822454c725FcaeE35fF6); // address of the hook contract deployed to goerli -- you can use this hook address or deploy your own!
+    address constant MUNI_ADDRESS = address(0xbD97BF168FA913607b996fab823F88610DCF7737); //-- insert your own contract
+        // address here -- mUNI deployed to GOERLI
+    address constant MUSDC_ADDRESS = address(0xa468864e673a807572598AB6208E49323484c6bF); //-- insert your own contract
+        // address here -- mUSDC deployed to GOERLI
+    address constant HOOK_ADDRESS = address(0x3CA2cD9f71104a6e1b67822454c725FcaeE35fF6); // address of the hook contract
+        // deployed to goerli -- you can use this hook address or deploy your own!
 
     // slippage tolerance to allow for unlimited price impact
     uint160 public constant MIN_PRICE_LIMIT = TickMath.MIN_SQRT_RATIO + 1;
@@ -52,12 +55,12 @@ contract SwapScript is Script {
             zeroForOne: zeroForOne,
             amountSpecified: 100e18,
             sqrtPriceLimitX96: zeroForOne ? MIN_PRICE_LIMIT : MAX_PRICE_LIMIT // unlimited impact
-        });
+         });
 
         // in v4, users have the option to receieve native ERC20s or wrapped ERC1155 tokens
         // here, we'll take the ERC20s
         PoolSwapTest.TestSettings memory testSettings =
-            PoolSwapTest.TestSettings({withdrawTokens: true, settleUsingTransfer: true});
+            PoolSwapTest.TestSettings({ withdrawTokens: true, settleUsingTransfer: true });
 
         bytes memory hookData = new bytes(0);
         vm.broadcast();

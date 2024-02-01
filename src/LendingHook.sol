@@ -3,20 +3,20 @@ pragma solidity >=0.8.0 <0.9.0;
 
 // Uniswap
 // TODO: update to v4-periphery/BaseHook.sol when its compatible
-import {BaseHook} from "./forks/BaseHook.sol";
-import {Hooks} from "@uniswap/v4-core/contracts/libraries/Hooks.sol";
-import {PoolId, PoolIdLibrary} from "@uniswap/v4-core/contracts/types/PoolId.sol";
-import {PoolKey} from "@uniswap/v4-core/contracts/types/PoolKey.sol";
-import {CurrencyLibrary, Currency} from "@uniswap/v4-core/contracts/types/Currency.sol";
-import {BalanceDelta} from "@uniswap/v4-core/contracts/types/BalanceDelta.sol";
-import {TickMath} from "@uniswap/v4-core/contracts/libraries/TickMath.sol";
-import {Pool} from "@uniswap/v4-core/contracts/libraries/Pool.sol";
-import {Position} from "@uniswap/v4-core/contracts/libraries/Position.sol";
-import {IPoolManager} from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
+import { BaseHook } from "./forks/BaseHook.sol";
+import { Hooks } from "@uniswap/v4-core/contracts/libraries/Hooks.sol";
+import { PoolId, PoolIdLibrary } from "@uniswap/v4-core/contracts/types/PoolId.sol";
+import { PoolKey } from "@uniswap/v4-core/contracts/types/PoolKey.sol";
+import { CurrencyLibrary, Currency } from "@uniswap/v4-core/contracts/types/Currency.sol";
+import { BalanceDelta } from "@uniswap/v4-core/contracts/types/BalanceDelta.sol";
+import { TickMath } from "@uniswap/v4-core/contracts/libraries/TickMath.sol";
+import { Pool } from "@uniswap/v4-core/contracts/libraries/Pool.sol";
+import { Position } from "@uniswap/v4-core/contracts/libraries/Position.sol";
+import { IPoolManager } from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
 
 // Oz
-import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract LendingHook is BaseHook {
     using Pool for *;
@@ -32,14 +32,14 @@ contract LendingHook is BaseHook {
     // TODO - add rETH, cbETH (but TODO - look at legal aspects of cbETH). Leave out frxETH - too risky
     IERC20 public immutable wstETH = IERC20(0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0);
 
-    // NOTE - You can't directly read stETH yield. It's unknown the future of it. 
+    // NOTE - You can't directly read stETH yield. It's unknown the future of it.
     // Best you can do is 7 day average or something
-    // Will be important when incorporating other liquid eth tokens (I guess we don't know the real yield of any of them)
+    // Will be important when incorporating other liquid eth tokens (I guess we don't know the real yield of any of
+    // them)
 
+    constructor(IPoolManager _poolManager) BaseHook(_poolManager) { }
 
-    constructor(IPoolManager _poolManager) BaseHook(_poolManager) {}
-
-    function getHookPermissions() public override pure returns (Hooks.Permissions memory) {
+    function getHookPermissions() public pure override returns (Hooks.Permissions memory) {
         return Hooks.Permissions({
             beforeInitialize: false,
             afterInitialize: false,
@@ -55,7 +55,13 @@ contract LendingHook is BaseHook {
     }
     // ---------------------------------- Hooks ----------------------------------
 
-    function afterSwap(address, PoolKey calldata key, IPoolManager.SwapParams calldata, BalanceDelta, bytes calldata)
+    function afterSwap(
+        address,
+        PoolKey calldata key,
+        IPoolManager.SwapParams calldata,
+        BalanceDelta,
+        bytes calldata
+    )
         external
         override
         returns (bytes4)
@@ -69,7 +75,11 @@ contract LendingHook is BaseHook {
         PoolKey calldata key,
         IPoolManager.ModifyPositionParams calldata params,
         bytes calldata
-    ) external override returns (bytes4) {
+    )
+        external
+        override
+        returns (bytes4)
+    {
         // TODO
         return BaseHook.beforeModifyPosition.selector;
     }
@@ -80,10 +90,14 @@ contract LendingHook is BaseHook {
         IPoolManager.ModifyPositionParams calldata,
         BalanceDelta,
         bytes calldata
-    ) external override returns (bytes4) {
+    )
+        external
+        override
+        returns (bytes4)
+    {
         // TODO
         return BaseHook.afterModifyPosition.selector;
     }
 
-    receive() external payable {}
+    receive() external payable { }
 }
