@@ -11,13 +11,17 @@ import { CurrencyLibrary, Currency } from "@uniswap/v4-core/contracts/types/Curr
 import { BalanceDelta } from "@uniswap/v4-core/contracts/types/BalanceDelta.sol";
 // import { TickMath } from "@uniswap/v4-core/contracts/libraries/TickMath.sol";
 import { Pool } from "@uniswap/v4-core/contracts/libraries/Pool.sol";
-// import { Position } from "@uniswap/v4-core/contracts/libraries/Position.sol";
+// import { Position } from "@uniswap/v4-core/contracts/libraries/Position.sol"; 
 import { IPoolManager } from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
 
 // Oz
 // import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
+// Open Questions
+// - How to hand out rewards to users? (I think sell and top up the LP tokens is best, like a 4626 vault. Can use donate)
+// - How can we limit the contract from getting bricked by an aave where all tokens are borrowed, and you can't withdraw?
+// - 
 contract LendingHook is BaseHook {
     using Pool for *;
     using PoolIdLibrary for PoolKey;
@@ -34,6 +38,7 @@ contract LendingHook is BaseHook {
     // Will be important when incorporating other liquid eth tokens (I guess we don't know the real yield of any of
     // them)
     IERC20 public immutable wstETH = IERC20(0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0);
+
 
 
 
@@ -67,6 +72,8 @@ contract LendingHook is BaseHook {
         returns (bytes4)
     {
         // TODO
+        // Needs to check if AFTER a swap we have shifted into a new tick
+        // If so, net sell or buy the USDC and the ETH that is in the new position
         return BaseHook.afterSwap.selector;
     }
 
@@ -81,6 +88,8 @@ contract LendingHook is BaseHook {
         returns (bytes4)
     {
         // TODO
+        // If you are placing exactly in the position, you wouldn't put anything in aave
+        // If you are putting funds into a wider band, then you would deposit some ETH and USDC
         return BaseHook.beforeModifyPosition.selector;
     }
 
@@ -96,6 +105,7 @@ contract LendingHook is BaseHook {
         returns (bytes4)
     {
         // TODO
+        // The exact opposite of beforeModifyPosition
         return BaseHook.afterModifyPosition.selector;
     }
 

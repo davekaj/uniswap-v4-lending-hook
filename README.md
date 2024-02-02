@@ -44,6 +44,7 @@ Ideas we decided to avoid
 # Open Questions
 - How to hand out the rewards to users? (maybe sell rewards then donate token/eth to pool, increase everyones LP shares value)
 - How to add in more yield protocols (i.e. compound, spark) and rebalance for the best yield?
+- What if Aave gets too full (so the pool couldn't withdraw) - you are kinda stuck not being able to withdraw assets. Very, very bad for the uniswap pool. You need some sort of management here
 
 # Resources
 - Refer to https://github.com/uniswapfoundation/v4-template for the original template docs
